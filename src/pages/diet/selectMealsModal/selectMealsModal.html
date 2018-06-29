@@ -1,0 +1,21 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Selecionar Refeições</ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="cancelSelection()">cancelar</button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-searchbar [(ngModel)]="inputFilter" (ionInput)="getItems($event)" (ionCancel)="onCancel()"></ion-searchbar>
+    <ion-list *ngIf="filteredMeals!=null && filteredMeals.length > 0">
+        <ion-item *ngFor="let meal of filteredMeals">
+            <ion-label>{{ meal.name }}</ion-label>
+            <ion-checkbox [(ngModel)]="selectedItems[meal.id]" type="checkbox"></ion-checkbox>
+        </ion-item>
+        <ion-item *ngIf="meals.length == 0">Nenhuma&nbsp;<strong>Refeição</strong>&nbsp;cadastrada.</ion-item>
+    </ion-list>
+    <button ion-button full (click)="goToMealPage()">Nova&nbsp;<strong>Refeição</strong></button>
+    <button ion-button full (click)="confirmSelection()">Confirmar</button>
+</ion-content>

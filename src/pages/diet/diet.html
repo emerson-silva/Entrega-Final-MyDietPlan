@@ -1,0 +1,50 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Dieta</ion-title>
+        <ion-buttons end>
+            <button ion-button *ngIf="!isEditing" (click)="edit()">
+                <ion-icon name="create"></ion-icon>
+            </button>
+            <button ion-button *ngIf="!isEditing" (click)="deleteDiet()">
+                <ion-icon name="trash"></ion-icon>
+            </button>
+            <button ion-button *ngIf="isEditing" (click)="cancel()">cancelar</button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-item>
+        <ion-label>Nome</ion-label>
+        <ion-input [(ngModel)]="diet.name" [disabled]="!isEditing"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Descrição {{ mealTimes }}</ion-label>
+        <ion-input [(ngModel)]="diet.description" [disabled]="!isEditing"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label *ngIf="isEditing">Definir como dieta ativa</ion-label>
+        <ion-label *ngIf="!isEditing">Definir como dieta ativa</ion-label>
+        <ion-checkbox [(ngModel)]="setAsActive" [disabled]="!isEditing"></ion-checkbox>
+    </ion-item>
+    <ion-item color="light" class="list-title">Refeições</ion-item>
+    <ion-item *ngIf="mealGroups.length == 0">Nenhuma&nbsp;<strong>Refeição</strong>&nbsp;cadastrada.</ion-item>
+    <button ion-button full (click)="addNewMealToDiet()" *ngIf="isEditing">Adicionar Refeição</button>
+    <ion-list *ngFor="let mealGroup of mealGroups">
+        <ion-item color="light" class="list-tittle">
+            <ion-label>
+                Refeição {{ mealGroups.indexOf(mealGroup)+1 }}
+            </ion-label>
+            <ion-datetime [(ngModel)]="mealGroup.date" displayFormat="HH:mm" (ngModelChange)="sortMealGroups()"></ion-datetime>
+        </ion-item>
+        <ion-item *ngIf="mealGroup.mealItems.length == 0">Nenhuma opção de&nbsp;<strong>Refeição</strong>&nbsp;cadastrada.</ion-item>
+        <ion-item *ngFor="let meal of mealGroup.mealItems">
+            {{ meal.name }}
+        </ion-item>
+        <button ion-button full *ngIf="isEditing" (click)="openSelectMealsModal(mealGroup)">Selecionar Opções</button>
+    </ion-list>
+    <button ion-button full *ngIf="isEditing" [disabled]="!isValid()" (click)="saveDiet()">Salvar</button> 
+</ion-content>

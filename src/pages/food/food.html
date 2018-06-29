@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Alimento</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="enableEditing()" *ngIf="!isEditing">
+                <ion-icon name="create"></ion-icon>
+            </button>
+            <button ion-button icon-only (click)="deleteFood()" *ngIf="!isEditing">
+                <ion-icon name="trash"></ion-icon>
+            </button>
+            <button ion-button (click)="cancelChanges()" *ngIf="isEditing">cancel</button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <fieldset [disabled]="!isEditing">
+        <form (ngSubmit)="saveFood()">
+            <ion-item>
+                <ion-label>Nome</ion-label>
+                <ion-input [(ngModel)]="food.name" type="text" name="name" required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Descrição</ion-label>
+                <ion-input [(ngModel)]="food.description" type="text" name="description"></ion-input>
+            </ion-item>
+            <ion-item class="list-title">
+                Valores nutricionais de porção de 100g
+            </ion-item>
+            <ion-item>
+                <ion-label>Carboidratos (g)</ion-label>
+                <ion-input [(ngModel)]="food.carb" type="number" max="100" name="carb" required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Proteínas (g)</ion-label>
+                <ion-input [(ngModel)]="food.protein" type="number" max="100" name="protein" required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Gorduras (g)</ion-label>
+                <ion-input [(ngModel)]="food.fat" type="number" max="100" name="fat" required></ion-input>
+            </ion-item>
+            <button ion-button full type="submit" *ngIf="isEditing" [disabled]="!isValid(food)">Salvar</button>
+        </form>
+    </fieldset>
+</ion-content>

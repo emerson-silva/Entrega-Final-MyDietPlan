@@ -1,0 +1,43 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Refeição</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="enableEditing()" *ngIf="!isEditing">
+                <ion-icon name="create"></ion-icon>
+            </button>
+            <button ion-button icon-only (click)="deleteMeal()" *ngIf="!isEditing">
+                <ion-icon name="trash"></ion-icon>
+            </button>
+            <button ion-button (click)="cancelChanges()" *ngIf="isEditing">cancel</button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <fieldset [disabled]="!isEditing">
+        <ion-item>
+            <ion-label>Nome</ion-label>
+            <ion-input [(ngModel)]="meal.name" name="name" required></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Descrição</ion-label>
+            <ion-input [(ngModel)]="meal.description" name="description"></ion-input>
+        </ion-item>
+        <ion-item color="light" class="list-title">Alimentos</ion-item>
+        <ion-list *ngIf="foodItems!=null && foodItems.length > 0">
+            <ion-item *ngFor="let foodItem of foodItems">
+                <ion-label>{{ foodItem.food.name }} (g)</ion-label>
+                <ion-input [(ngModel)]="foodItem.quantity" type="number"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="foodItems.length == 0">Nenhum&nbsp;<strong>Alimento</strong>&nbsp;cadastrado.</ion-item>
+        </ion-list>
+        <button ion-button full *ngIf="isEditing" (click)="openSelectFoodsModal()" required>
+            Selecionar Alimentos
+        </button>
+        <button ion-button full (click)="saveMeal()" type="submit" *ngIf="isEditing" [disabled]="!isValid(meal)">Salvar</button>
+    </fieldset>
+</ion-content>
+      

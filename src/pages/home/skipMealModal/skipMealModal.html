@@ -1,0 +1,17 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Pular Refeição</ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="cancel()">cancelar</button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-item>
+        <p text-align="center">Não é recomendado pular refeições.</p>
+        <p text-align="center">Essa ação não pode ser desfeita</p>
+        <h3 text-align="center">Deseja continuar?</h3>
+    </ion-item>
+    <button ion-button full (click)="confirm()">Confirmar</button>
+</ion-content>

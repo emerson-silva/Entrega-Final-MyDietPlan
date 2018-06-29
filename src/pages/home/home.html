@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Registrar Refeição</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="mealGroup!=null">
+    <ion-item>
+      <ion-label>Horário sugerido</ion-label>
+      <ion-datetime displayFormat="HH:mm" [(ngModel)]="mealGroup.date" [disabled]="true"></ion-datetime>
+    </ion-item>
+    <ion-list radio-group [(ngModel)]="selectedOptionIndex">
+      <ion-item *ngFor="let meal of mealOptions">
+        <ion-label> {{ meal.name }} </ion-label>
+        <ion-radio value="{{ mealOptions.indexOf(meal) }}" [disabled]="!containsStock(meal)"></ion-radio>
+        <ion-item *ngFor="let foodItem of meal.foodItems">
+            <p float-left>{{ foodItem.food.name }}</p>
+            <p float-right>{{ foodItem.quantity }}</p>
+        </ion-item>
+      </ion-item>
+    </ion-list>
+    <button ion-button full (click)="confirmOption();">
+      Confirmar
+    </button>
+    <button ion-button clear color="stable" block (click)="openSkipMealModal();">
+      pular
+    </button>
+  </div>
+  <div *ngIf="mealGroup==null">
+    <div class="spacer" style="height:40px;"></div>
+    <ion-item full center>Nenhuma&nbsp;<strong>Dieta</strong>&nbsp;ativa.</ion-item>
+    <button ion-button clear color="stable" block (click)="goToRegistriesPage();">
+      Ver&nbsp;<strong>Dietas</strong>&nbsp;.
+    </button>
+  </div>
+</ion-content>

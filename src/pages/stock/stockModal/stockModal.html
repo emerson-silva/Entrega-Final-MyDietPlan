@@ -1,0 +1,20 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Selecionar Nível de Estoque</ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="cancel()">cancelar</button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-item>
+        {{ food.name }}
+        <span class="rigth">{{ food.stockLevel }}g</span>
+    </ion-item>
+    <ion-range min="0" max="10000" step="10" (ionChange)="onChangeQuantity()" [(ngModel)]="food.stockLevel"></ion-range>
+        <h2 text-center>
+            <span *ngIf="quantityModifier>=0">+</span>{{ quantityModifier }}
+        </h2>
+    <button ion-button full [disabled]="disableConfirm" (click)="confirmStockLevel()">Confirmar</button>
+</ion-content>
